@@ -1,0 +1,90 @@
+// 1️⃣ override biến bootstrap
+$info : #f0542b;
+$primary: #217555;
+$success: #0000C9;
+
+// 2️⃣ import bootstrap
+@import "bootstrap/scss/bootstrap";
+
+.three-dots-toggle {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 🚨 ĐẬP CARET CỦA BOOTSTRAP */
+.three-dots-toggle.dropdown-toggle::after {
+    display: none !important;
+    content: none !important;
+}
+
+//background black
+.bg_black {
+    background-color: #1d242e;
+    color: #fff;
+}
+
+//bg-header
+.bg-header {
+    background-color: #f7fafd;
+    color: #1D242E;
+}
+
+.bg-onclick {
+    background-color: #009099;
+}
+
+//background controller
+.background-controller {
+    background-color: #283342;
+    color: #fff;
+
+}
+
+//animate
+.backgroundAnimate {
+    background-color: #1d242e;
+}
+
+.background {
+    background-color: #edf1f5;
+}
+
+.shadow-primary {
+    box-shadow: #217555;
+}
+
+.layout {
+
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* sidebar */
+.controller {
+    width: 80px;
+    /* sidebar nhỏ như m đang dùng */
+    background-color: #a9a6a6;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+/* content */
+.content {
+    flex-grow: 1;
+    overflow-y: auto;
+
+}
+
+.sidebar-scroll {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.content-scroll {
+    height: 100vh;
+    overflow-y: auto;
+}
