@@ -1,4 +1,6 @@
 import { Bell, Menu, Search, User, X } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+
 
 interface HeaderProps {
     isSidebarOpen: boolean;
@@ -6,6 +8,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
+    const { lastName, roleKey } = useAuth()
+
     return (
         <header className="fixed top-0 right-0 left-0 h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 z-50 flex items-center justify-between px-4 lg:px-6">
             <div className="flex items-center gap-4">
@@ -43,8 +47,8 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
 
                 <div className="flex items-center gap-3 pl-2 border-l border-gray-200">
                     <div className="hidden sm:block text-right">
-                        <p className="text-xs font-bold text-slate-800 leading-none">Quản lý Admin</p>
-                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-1">Manager</p>
+                        <p className="text-xs font-bold text-slate-800 leading-none">{lastName}</p>
+                        <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-1">{roleKey}</p>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white ring-2 ring-white shadow-md cursor-pointer hover:scale-105 transition-transform">
                         <User size={20} />

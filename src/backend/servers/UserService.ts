@@ -2,7 +2,6 @@ import { collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase
 import { db } from "../firebase/client/firebaseClient";
 
 export async function getUserProfile(uid: string) {
-  // users/{uid}
   const userRef = doc(db, "users", uid);
   const userSnap = await getDoc(userRef);
 
@@ -12,13 +11,17 @@ export async function getUserProfile(uid: string) {
 
   const userData = userSnap.data();
 
-  // role_id là reference → lấy ID cuối
-  const roleRef = userData.role_id; // /roles/manager
-  const roleId = roleRef.id; // manager
+  const roleRef = userData.role_id;
+  const roleKey = roleRef?.id ?? null;
+
+  const fullName: string = userData?.first_name + " " + userData?.last_name;
+  const lastName = userData?.last_name ?? "";
 
   return {
     ...userData,
-    roleKey: roleId, // admin | manager | staff
+    roleKey,
+    lastName,
+    fullName
   };
 }
 export async function getAllUsers() {

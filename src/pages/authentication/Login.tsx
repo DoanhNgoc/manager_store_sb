@@ -2,9 +2,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../Assets/backend/firebase/client/firebaseClient";
 import { useAuth } from "../../context/AuthContext";
 import { ArrowRight, Loader2, Lock, Mail, Sparkles } from "lucide-react";
+import { auth } from "../../backend/firebase/client/firebaseClient";
 
 export default function Login() {
     const navigate = useNavigate();

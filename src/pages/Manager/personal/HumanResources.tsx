@@ -6,8 +6,11 @@ import { useUsers } from "../../../hooks/useUsers";
 import ErrorState from "../../../components/ErrorAndLoading/ErrorState";
 import LoadingState from "../../../components/ErrorAndLoading/LoadingState";
 
+interface HumanResourcesProps {
+    onclickAddmember: (activePage: string) => void | null
+}
 
-export default function HumanResources() {
+export default function HumanResources({ onclickAddmember }: HumanResourcesProps) {
     const { users, loading, error, deleteUser } = useUsers();
 
 
@@ -38,7 +41,9 @@ export default function HumanResources() {
                     <h1 className="text-2xl font-extrabold text-slate-800 tracking-tight">Quản lý Nhân sự</h1>
                     <p className="text-sm text-slate-500 mt-1">Quản lý đội ngũ ({users.length} thành viên)</p>
                 </div>
-                <button className="bg-[#009099] text-white px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 hover:bg-[#007a82] transition-all shadow-lg shadow-[#009099]/20">
+                <button
+                    className="bg-[#009099] text-white px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 hover:bg-[#007a82] transition-all shadow-lg shadow-[#009099]/20"
+                    onClick={() => { onclickAddmember("AddMember") }}>
                     <Plus size={18} /> <span className="hidden sm:inline">Thêm nhân sự</span>
                 </button>
             </div>
@@ -64,7 +69,7 @@ export default function HumanResources() {
                                             {s?.last_name.trim().split(" ").pop()?.charAt(0).toUpperCase()}
                                         </div>
                                         <div>
-                                            <p className="text-sm font-black text-slate-800 leading-none mb-1">{s?.first_name} {s?.last_name}</p>
+                                            <p className="text-sm font-black text-slate-800 leading-none mb-1 group-hover:text-[#00928f]">{s?.first_name} {s?.last_name}</p>
                                             <p className="text-xs text-slate-400 md:hidden">{s?.roleKey}</p>
                                             <p className="text-[10px] text-slate-300 hidden md:block">{s?.email}</p>
                                         </div>

@@ -1,5 +1,4 @@
 import { AlertCircle } from "lucide-react";
-import { useState } from "react";
 interface PropConfirmDeleteModalPersonal {
     staff: any,
     onClose: () => void,
@@ -7,7 +6,6 @@ interface PropConfirmDeleteModalPersonal {
 }
 // --- Component Modal Xác nhận Xóa ---
 const ConfirmDeleteModalPersonal = ({ staff, onClose, onConfirm }: PropConfirmDeleteModalPersonal) => {
-    const [deleleId, setDeleteId] = useState<string | null>(null)
     return (
 
         <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
@@ -21,12 +19,9 @@ const ConfirmDeleteModalPersonal = ({ staff, onClose, onConfirm }: PropConfirmDe
                     <p className="text-slate-500 font-medium mb-8">Dữ liệu của <span className="font-bold text-red-500">{staff?.first_name} {staff?.last_name}</span> sẽ bị xóa vĩnh viễn.</p>
                     <div className="flex gap-3 w-full">
                         <button onClick={onClose} className="flex-1 py-4 bg-slate-100 font-bold rounded-2xl hover:bg-slate-200 transition-colors">Hủy</button>
-                        <button onClick={() => {
-                            setDeleteId(staff?.uid)
-                            if (deleleId) {
-                                onConfirm(deleleId)
-                            }
-                        }} className="flex-1 py-4 bg-red-500 text-white font-bold rounded-2xl hover:bg-red-600 transition-shadow shadow-lg shadow-red-200">Xác nhận</button>
+                        <button
+                            onClick={() => onConfirm(staff.uid)}
+                            className="flex-1 py-4 bg-red-500 text-white font-bold rounded-2xl hover:bg-red-600 transition-shadow shadow-lg shadow-red-200">Xác nhận</button>
                     </div>
                 </div>
             </div>

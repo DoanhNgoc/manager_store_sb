@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 
 import { doc } from "firebase/firestore";
-import { db } from "../Assets/backend/firebase/client/firebaseClient";
-import { deleteUserDoc, getAllUsers, updateUserRole } from "../Assets/backend/servers/UserService";
+import { getAllUsers, updateUserRole } from "../backend/servers/UserService";
+import { db } from "../backend/firebase/client/firebaseClient";
+interface DeleteUserResponse {
+    success: boolean;
+    message?: string;
+}
 
 export function useUsers() {
     const [users, setUsers] = useState<any[]>([]);
@@ -34,7 +38,21 @@ export function useUsers() {
 
     const deleteUser = async (uid: string) => {
         if (!confirm("Xoá user này?")) return;
-        await deleteUserDoc(uid);
+        const res = await fetch("http://localhost:3001/api/delete-user", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ uid }),
+        });
+        if (!res.ok) {
+            throw new Error("Xoá user thất bại");
+        }
+
+        const data: DeleteUserResponse = await res.json();
+
+        if (!data.success) {
+            throw new Error(data.message ?? "Unknown error");
+        }
+
         fetchUsers();
     };
 

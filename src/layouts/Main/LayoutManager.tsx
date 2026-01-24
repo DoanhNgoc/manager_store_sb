@@ -12,6 +12,7 @@ import StockAlert from "../../pages/Manager/warehouses/StockAlert";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import LogoutModal from "../../components/Controller/LogoutModal";
+import AddMember from "../../pages/Manager/personal/animation/AddMember";
 export default function LayoutManager() {
     const [isSidebarOpen, setSidebarOpen] = useState(true);
 
@@ -56,7 +57,9 @@ export default function LayoutManager() {
                 return <HomeManager />
 
             case "HumanResources":
-                return <HumanResources />
+                return <HumanResources onclickAddmember={(activePage) => {
+                    setActivePage(activePage)
+                }} />
 
             case "PersonnelEvaluation":
                 return <PersonnelEvaluation />
@@ -80,7 +83,10 @@ export default function LayoutManager() {
 
             case "StockAlert":
                 return <StockAlert />
-
+            case 'AddMember':
+                return <AddMember onclickReturn={(activePage) => {
+                    setActivePage(activePage)
+                }} />
         }
     }
     return <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-[#009099]/30">
