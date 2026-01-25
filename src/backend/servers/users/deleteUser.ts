@@ -1,4 +1,4 @@
-import { adminAuth, adminDb } from "../firebase/admin/firebaseAdmin";
+import { adminAuth, adminDb } from "../../firebase/admin/firebaseAdmin";
 
 export async function deleteUserByAdmin(uid: string) {
     // 1. Xóa auth

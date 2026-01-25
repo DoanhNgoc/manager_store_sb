@@ -1,28 +1,21 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import bodyParser from "body-parser";
-import { deleteUserByAdmin } from "./servers/deleteUser";
+import userRoutes from "./routes/user.route";
 
 const app = express();
+
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.post("/api/delete-user", async (req, res) => {
-    const { uid } = req.body;
+/* gắn route */
+app.use("/api", userRoutes);
 
-    if (!uid) {
-        return res.status(400).json({ success: false, message: "Missing uid" });
-    }
-
-    try {
-        await deleteUserByAdmin(uid);
-        res.json({ success: true });
-    } catch (err: any) {
-        res.status(500).json({ success: false, message: err.message });
-    }
+/* test sống */
+app.get("/ping", (_req, res) => {
+    res.json({ success: true, message: "Server alive" });
 });
 
 app.listen(3001, () => {
-    console.log("Server running at http://localhost:3001");
+    console.log("🚀 Backend running at http://localhost:3001");
 });

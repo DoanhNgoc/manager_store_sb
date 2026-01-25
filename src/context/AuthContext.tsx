@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
-import { getUserProfile } from "../backend/servers/UserService";
+import { getUserProfile } from "../backend/servers/users/UserService";
 import { auth } from "../backend/firebase/client/firebaseClient";
 
 type AuthContextType = {

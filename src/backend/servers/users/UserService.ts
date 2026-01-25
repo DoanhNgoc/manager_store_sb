@@ -1,5 +1,5 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
-import { db } from "../firebase/client/firebaseClient";
+import { db } from "../../firebase/client/firebaseClient";
 
 export async function getUserProfile(uid: string) {
   const userRef = doc(db, "users", uid);

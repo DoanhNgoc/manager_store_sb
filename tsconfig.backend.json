@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "src/backend/index.ts"
+    ]
+}
