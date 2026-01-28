@@ -1,7 +1,7 @@
 import { Briefcase, Calendar, Mail, Phone, Trash2 } from "lucide-react";
-import ErrorState from "../ErrorAndLoading/ErrorState";
-import Age from "../Fomat/Time_and_Duration/Age";
-import ExperienceDuration from "../Fomat/Time_and_Duration/ExperienceDuration";
+import ErrorState from "../../ErrorAndLoading/ErrorState";
+import Age from "../../Fomat/Time_and_Duration/Age";
+import ExperienceDuration from "../../Fomat/Time_and_Duration/ExperienceDuration";
 interface PropStaffDetailModal {
     staff: any,
     onClose: () => void,

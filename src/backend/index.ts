@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import userRoutes from "./routes/user.route";
 
+import userRoutes from "./routes/user.route";
+import reviewWeekRoutes from "./routes/reviewWeek.route";
 const app = express();
 
 app.use(cors());
@@ -10,7 +11,7 @@ app.use(express.json());
 
 /* gắn route */
 app.use("/api", userRoutes);
-
+app.use("/api", reviewWeekRoutes);
 /* test sống */
 app.get("/ping", (_req, res) => {
     res.json({ success: true, message: "Server alive" });

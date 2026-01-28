@@ -1,5 +1,6 @@
 import { adminAuth, adminDb } from "../../firebase/admin/firebaseAdmin";
 import nodemailer from "nodemailer";
+import { getAllUsers } from "./UserService";
 
 /* ========== helper ========== */
 async function generateMemberId() {
@@ -98,7 +99,7 @@ export async function createUserByAdmin(data: {
         id_member,
         `${data.first_name} ${data.last_name}`
     );
-
+    getAllUsers()
     return {
         uid: user.uid,
         id_member,

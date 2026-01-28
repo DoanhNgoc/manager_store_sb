@@ -1,5 +1,5 @@
 import { HelpCircle } from "lucide-react"
-import { useUsers } from "../../hooks/useUsers"
+import { useUsers } from "../../../hooks/useUsers"
 interface ConfirmAddMemberModalProps {
     setConfirmAdd: React.Dispatch<React.SetStateAction<boolean>>,
     data: any,

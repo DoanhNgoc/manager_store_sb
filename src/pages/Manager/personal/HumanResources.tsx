@@ -1,7 +1,7 @@
 import { ChevronRight, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import ConfirmDeleteModalPersonal from "../../../components/Modal/ConfirmDeleteModalPersonal";
-import StaffDetailModal from "../../../components/Modal/StaffDetailModal";
+import ConfirmDeleteModalPersonal from "../../../components/Modal/Personal/ConfirmDeleteModalPersonal";
+import StaffDetailModal from "../../../components/Modal/Personal/StaffDetailModal";
 import { useUsers } from "../../../hooks/useUsers";
 import ErrorState from "../../../components/ErrorAndLoading/ErrorState";
 import LoadingState from "../../../components/ErrorAndLoading/LoadingState";

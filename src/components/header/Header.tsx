@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
                         MS
                     </div>
                     <span className="font-bold text-xl hidden sm:block tracking-tight text-gray-800 font-sans">
-                        Manager Store
+                        Store Manager
                     </span>
                 </div>
             </div>

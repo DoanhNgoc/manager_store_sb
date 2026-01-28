@@ -7,6 +7,7 @@ type AuthContextType = {
     user: User | null;
     roleKey: string | null;
     lastName: string | null;
+    uidAuth: string | null;
     loading: boolean;
     logout: () => Promise<void>;
 };
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [roleKey, setRoleKey] = useState<string | null>(null);
+    const [uidAuth, setUidAuth] = useState<string | null>(null)
     const [lastName, setLastName] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -23,18 +25,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             try {
                 if (firebaseUser) {
                     setUser(firebaseUser);
-
                     const profile = await getUserProfile(firebaseUser.uid);
                     setRoleKey(profile?.roleKey ?? null);
+                    setUidAuth(firebaseUser.uid)
                     setLastName(profile?.lastName ?? null);
                 } else {
                     setUser(null);
                     setRoleKey(null);
+                    setUidAuth(null)
                 }
             } catch (err) {
                 console.error("Auth load profile error:", err);
                 setUser(null);
                 setRoleKey(null);
+                setUidAuth(null)
+
             } finally {
                 setLoading(false);
             }
@@ -48,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, roleKey, lastName, loading, logout }}>
+        <AuthContext.Provider value={{ user, roleKey, lastName, uidAuth, loading, logout }}>
             {children}
         </AuthContext.Provider>
     );
