@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "dev:server": "tsx src/backend/index.ts",
+    "dev:server": "tsx watch src/backend/index.ts",
     "preview": "vite preview"
   },
   "dependencies": {
