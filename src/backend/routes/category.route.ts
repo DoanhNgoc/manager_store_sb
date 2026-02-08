@@ -1,11 +1,12 @@
 import { Router } from "express";
 import {
+
     getAllCategories,
     createCategory,
     updateCategory,
     deleteCategory
 } from "../servers/warehouse/categories/category.service";
-
+import { getProductsByCategory } from "../servers/warehouse/products/product.service";
 const router = Router();
 
 router.get("/categories", async (_req, res) => {
@@ -30,4 +31,16 @@ router.delete("/categories/:id", async (req, res) => {
     res.json({ success: true, id: req.params.id });
 });
 
+router.get("/categories/:id/products", async (req, res) => {
+    try {
+        const products = await getProductsByCategory(req.params.id);
+        res.json({ success: true, data: products });
+    } catch (err: any) {
+        console.error("🔥 GET PRODUCTS BY CATEGORY ERROR:", err);
+        res.status(500).json({
+            success: false,
+            message: err.message ?? "Internal server error"
+        });
+    }
+});
 export default router;

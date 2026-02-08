@@ -129,7 +129,55 @@ export async function deleteProduct(id: string) {
     await adminDb.collection("products").doc(id).delete();
     return { success: true };
 }
+/* ================= GET PRODUCTS BY CATEGORY ================= */
+export async function getProductsByCategory(categoryId: string) {
+    const cateRef = adminDb.doc(`categories/${categoryId}`);
 
+    const snap = await adminDb
+        .collection("products")
+        .where("category_id", "==", cateRef)
+        .orderBy("created_at", "desc")
+        .get();
+
+    const products = await Promise.all(
+        snap.docs.map(async (doc) => {
+            const data = doc.data();
+
+            // populate category
+            let category = null;
+            if (data.category_id) {
+                const cateSnap = await data.category_id.get();
+                if (cateSnap.exists) {
+                    category = {
+                        id: cateSnap.id,
+                        ...cateSnap.data(),
+                    };
+                }
+            }
+
+            // populate status
+            let status = null;
+            if (data.status_id) {
+                const statusSnap = await data.status_id.get();
+                if (statusSnap.exists) {
+                    status = {
+                        id: statusSnap.id,
+                        ...statusSnap.data(),
+                    };
+                }
+            }
+
+            return {
+                id: doc.id,
+                ...data,
+                category,
+                status,
+            };
+        })
+    );
+
+    return products;
+}
 /* ================= Utils ================= */
 function nextProductCode(prefix: string, lastCode?: string) {
     if (!lastCode) return `${prefix}001`;

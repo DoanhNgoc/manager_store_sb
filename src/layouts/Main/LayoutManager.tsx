@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import HomeManager from "../../pages/Manager/dashboard/HomeManager";
 import HumanResources from "../../pages/Manager/personal/HumanResources";
 import HomeSalary from "../../pages/Manager/personal/salary/HomeSalary";
-import HomeCustomerServices from "../../pages/Manager/customer_service/HomeCustomerServices";
 import IntoWarehouse from "../../pages/Manager/warehouses/IntoWarehouse";
 import Header from "../../components/header/Header";
 import PersonnelEvaluation from "../../pages/Manager/personal/review/PersonnelEvaluation";
@@ -13,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import LogoutModal from "../../components/Controller/LogoutModal";
 import AddMember from "../../pages/Manager/personal/animation/AddMember";
+import HomeWarehouse from "../../pages/Manager/warehouses/HomeWarehouse";
 export default function LayoutManager() {
     const [isSidebarOpen, setSidebarOpen] = useState(true);
 
@@ -70,7 +70,7 @@ export default function LayoutManager() {
 
 
             case "HomeWarehouse":
-                return <HomeCustomerServices />
+                return <HomeWarehouse />
 
             case "Inventory":
                 return <Inventory />
