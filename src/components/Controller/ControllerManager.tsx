@@ -1,5 +1,5 @@
 
-import { AlertTriangle, Box, ClipboardCheck, Layers, LayoutDashboard, LogOut, Settings, UserCircle, Users, Wallet, Warehouse } from "lucide-react";
+import { AlertTriangle, Box, ClipboardCheck, History, Layers, LayoutDashboard, LogOut, Settings, UserCircle, Users, Wallet, Warehouse } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 interface SidebarProps {
     isOpen: boolean;
@@ -53,6 +53,12 @@ const managerController = [
                 pages: "StockAlert",
                 textHtml: "Cảnh báo tồn kho",
                 onclick: false,
+            },
+            {
+                icon: <History size={18} />,
+                pages: "HistoryWarehouse",
+                textHtml: "Lịch sử kho",
+                onclick: false
             }
         ]
     }

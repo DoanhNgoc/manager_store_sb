@@ -6,7 +6,7 @@ import LoadingState from "../../../../components/ErrorAndLoading/LoadingState";
 
 interface RestockFormProps {
     setView: React.Dispatch<React.SetStateAction<string>>;
-    uidAuth: string
+    uidAuth: string | null
 }
 
 const RestockForm = ({ setView, uidAuth }: RestockFormProps) => {

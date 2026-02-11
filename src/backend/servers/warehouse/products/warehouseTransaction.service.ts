@@ -149,6 +149,12 @@ export async function getAllWarehouseTransactions() {
             };
         })
     );
+    // ✅ sort lại theo created_at mới nhất -> cũ nhất
+    transactions.sort((a: any, b: any) => {
+        const timeA = a.created_at?._seconds ?? 0;
+        const timeB = b.created_at?._seconds ?? 0;
+        return timeB - timeA;
+    });
 
     return transactions;
 }

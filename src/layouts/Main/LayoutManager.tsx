@@ -6,13 +6,13 @@ import HomeSalary from "../../pages/Manager/personal/salary/HomeSalary";
 import IntoWarehouse from "../../pages/Manager/warehouses/IntoWarehouse";
 import Header from "../../components/header/Header";
 import PersonnelEvaluation from "../../pages/Manager/personal/review/PersonnelEvaluation";
-import Inventory from "../../pages/Manager/warehouses/Inventory";
 import StockAlert from "../../pages/Manager/warehouses/StockAlert";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import LogoutModal from "../../components/Controller/LogoutModal";
 import AddMember from "../../pages/Manager/personal/animation/AddMember";
 import HomeWarehouse from "../../pages/Manager/warehouses/HomeWarehouse";
+import HistoryWarehouse from "../../pages/Manager/warehouses/HistoryWarehouse";
 export default function LayoutManager() {
     const [isSidebarOpen, setSidebarOpen] = useState(true);
 
@@ -72,14 +72,12 @@ export default function LayoutManager() {
             case "HomeWarehouse":
                 return <HomeWarehouse />
 
-            case "Inventory":
-                return <Inventory />
+            case "HistoryWarehouse":
+                return < HistoryWarehouse />
 
             case "IntoWarehouse":
                 return <IntoWarehouse />
 
-            case "StockAlert":
-                return <StockAlert />
 
             case "StockAlert":
                 return <StockAlert />
