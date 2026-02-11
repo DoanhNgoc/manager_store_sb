@@ -2,18 +2,36 @@ import { ArrowRightLeft, Calendar, ChevronDown, ClipboardCheck, Info, PackageOpe
 import { useWarehouseTransactions } from "../../../hooks/useWarehouseTransactions"
 import LoadingState from "../../../components/ErrorAndLoading/LoadingState"
 import ErrorState from "../../../components/ErrorAndLoading/ErrorState"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import DateTime from "../../../components/Fomat/Time_and_Duration/DateTime"
 
 function HistoryWarehouse() {
+  // filter
   const [historyFilter, setHistoryFilter] = useState<string>("All")
-  const { transactions, loading, error } = useWarehouseTransactions()
+  const [history, setHistory] = useState<any | null>(null)
+
+  //data history warehouse
+  const { transactions, loading, errorTransactions } = useWarehouseTransactions()
+  useEffect(() => {
+    if (historyFilter === "All") {
+      setHistory(transactions)
+    }
+    else if (historyFilter === "import") {
+      setHistory(transactions.filter((item: any) => item?.type === "IMPORT"))
+    }
+    else {
+      setHistory(transactions.filter((item: any) => item?.type !== "IMPORT"))
+
+    }
+  }, [transactions, historyFilter])
   if (loading) {
     return <LoadingState />
   }
-  if (error) {
-    return <ErrorState message={error} />
+  if (errorTransactions) {
+    return <ErrorState message={errorTransactions} />
   }
+
+
   return <div className="max-w-5xl mx-auto space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 text-left pb-20">
     {/* <h2 className="text-3xl font-black text-slate-800 mb-2">Nhật ký hoạt động</h2>
     <p className="text-slate-400 font-medium mb-10">Dòng thời gian biến động kho bãi</p> */}
@@ -27,21 +45,21 @@ function HistoryWarehouse() {
           Tất cả
         </button>
         <button
-          onClick={() => setHistoryFilter('Nhập hàng')}
-          className={`flex-1 sm:flex-none px-4 md:px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${historyFilter === 'Nhập hàng' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+          onClick={() => setHistoryFilter('import')}
+          className={`flex-1 sm:flex-none px-4 md:px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${historyFilter === 'import' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
         >
           Nhập
         </button>
         <button
-          onClick={() => setHistoryFilter('Kiểm kho')}
-          className={`flex-1 sm:flex-none px-4 md:px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${historyFilter === 'Kiểm kho' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+          onClick={() => setHistoryFilter('adjust')}
+          className={`flex-1 sm:flex-none px-4 md:px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${historyFilter === 'adjust' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
         >
           Kiểm
         </button>
       </div>
     </div>
 
-    {transactions.map((h: any) => (
+    {history.map((h: any) => (
       <div key={h.id} className="bg-white rounded-3xl md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden flex flex-col">
         <div className="p-5 md:p-8 border-b border-slate-50 flex justify-between items-start bg-slate-50/30">
           <div className="flex gap-4 md:gap-5">
@@ -99,7 +117,7 @@ function HistoryWarehouse() {
         )}
       </div>
     ))}
-    {transactions.length === 0 && (
+    {history.length === 0 && (
       <div className="py-20 flex flex-col items-center justify-center opacity-20">
         <PackageOpen size={60} />
         <p className="mt-4 font-black">Chưa có lịch sử giao dịch</p>

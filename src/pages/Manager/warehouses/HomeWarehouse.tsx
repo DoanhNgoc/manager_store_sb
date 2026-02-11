@@ -27,7 +27,7 @@ function HomeWarehouse() {
         }
 
         productsByCategory(idCategory);
-    }, [idCategory]);
+    }, [idCategory, view]);
 
     if (error) {
         return <ErrorState message={error} />

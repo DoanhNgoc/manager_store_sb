@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 
 export type WarehouseTransactionItem = {
     product_id: string; // id doc product
-    before_quantity: number;
-    after_quantity: number;
+    quantity_change: number;
 };
 
 export type WarehouseTransaction = {
     id: string;
-    type: "import" | "check"; // nhập kho | kiểm kho
+    type: "IMPORT" | "EXPORT" | "ADJUST"; // nhập kho | kiểm kho
     note?: string;
     created_at?: any;
     products: WarehouseTransactionItem[];
@@ -20,10 +19,11 @@ export type WarehouseTransaction = {
 };
 
 export type CreateWarehouseTransactionPayload = {
-    type: "import" | "check";
+    type: "IMPORT" | "EXPORT" | "ADJUST";
+    title: string;
     note?: string;
-    user_id?: string;
-    products: WarehouseTransactionItem[];
+    created_by?: string;
+    items: WarehouseTransactionItem[];
 };
 
 interface ApiResponse<T = any> {

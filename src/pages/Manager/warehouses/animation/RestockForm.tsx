@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useProducts } from "../../../../hooks/userProducts";
 import ErrorState from "../../../../components/ErrorAndLoading/ErrorState";
 import LoadingState from "../../../../components/ErrorAndLoading/LoadingState";
+import { useWarehouseTransactions } from "../../../../hooks/useWarehouseTransactions";
 
 interface RestockFormProps {
     setView: React.Dispatch<React.SetStateAction<string>>;
@@ -20,7 +21,7 @@ const RestockForm = ({ setView, uidAuth }: RestockFormProps) => {
     const [title, setTitle] = useState<string>("")
 
     const { products, loading, error } = useProducts();
-
+    const { createWarehouseTransaction, loadingCreate, errorCreate } = useWarehouseTransactions()
     const dropdownRef = useRef<any>(null);
     const searchResults: any = useMemo(() => {
         if (!searchTerm.trim()) return [];
@@ -86,6 +87,23 @@ const RestockForm = ({ setView, uidAuth }: RestockFormProps) => {
         setSelectedProduct(null);
         setInputQty("");
         setSearchTerm("");
+    };
+    const submit = async (type: "IMPORT" | "EXPORT" | "ADJUST" = "IMPORT") => {
+        if (!uidAuth) return;
+
+        const data = {
+            title: title,
+            type: type,
+            note: note,
+            created_by: uidAuth,
+            items: entryList.map((item: any) => ({
+                product_id: item.id,
+                quantity_change: item.added
+            }))
+        };
+
+        await createWarehouseTransaction(data);
+        setView("home")
     };
 
     const removeLine = (product_id: string) =>
@@ -261,6 +279,7 @@ const RestockForm = ({ setView, uidAuth }: RestockFormProps) => {
                 <div className="text-sm font-bold text-slate-400 italic">Tổng số dòng hàng: {entryList.length}</div>
                 <button
                     disabled={entryList.length === 0}
+                    onClick={() => submit()}
                     className="px-12 py-4 bg-slate-800 text-white font-black rounded-2xl shadow-xl hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 transition-all flex items-center gap-3"
                 >
                     <Save size={20} /> Hoàn tất & Lưu kho
