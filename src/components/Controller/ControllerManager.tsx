@@ -1,5 +1,5 @@
 
-import { AlertTriangle, Box, ClipboardCheck, Layers, LayoutDashboard, LogOut, Settings, UserCircle, Users, Wallet, Warehouse } from "lucide-react";
+import { AlertTriangle, Box, Calendar, ClipboardCheck, Layers, LayoutDashboard, LogOut, Settings, UserCircle, Users, Wallet, Warehouse } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 interface SidebarProps {
     isOpen: boolean;
@@ -55,6 +55,13 @@ const managerController = [
                 onclick: false,
             }
         ]
+    },
+    {
+        icon: <Calendar size={20} />,
+        pages: "HomeSchedule",
+        textHtml: "Phân lịch",
+        item: null,
+        onclick: true
     }
 ];
 const ControllerManager: React.FC<SidebarProps> = ({ isOpen, isMobile, onLogoutClick, setActivePage }) => {

@@ -1,3 +1,4 @@
+import HomeSchedule from "../../pages/Manager/schedule/HomeSchedules";
 import ControllerManager from "../../components/Controller/ControllerManager"
 import { useEffect, useState } from "react";
 import HomeManager from "../../pages/Manager/dashboard/HomeManager";
@@ -87,6 +88,8 @@ export default function LayoutManager() {
                 return <AddMember onclickReturn={(activePage) => {
                     setActivePage(activePage)
                 }} />
+            case 'HomeSchedule':
+                return <HomeSchedule />
         }
     }
     return <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-[#009099]/30">

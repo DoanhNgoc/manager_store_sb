@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const SidebarItem = ({ item, collapsed, setActivePage }: { item: any, collapsed: boolean, setActivePage: React.Dispatch<React.SetStateAction<string>> }) => {
+const SidebarItem = ({ item, collapsed, setActivePage }: { item: any, collapsed: boolean, setActivePage: (page: string) => void }) => {
     const [isOpen, setIsOpen] = useState(false);
     const hasSubItems = item.item && item.item.length > 0;
 

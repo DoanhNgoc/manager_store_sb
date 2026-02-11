@@ -8,7 +8,6 @@ import LayoutStaff from "../layouts/Main/LayoutStaff";
 import LayoutManager from "../layouts/Main/LayoutManager";
 import ProtectedRoute from "./ProtectedRoute";
 
-
 const routes: RouteObject[] = [
     {
         path: "/",
@@ -36,12 +35,21 @@ const routes: RouteObject[] = [
                         ],
                     },
 
-                    // ✅ STAFF
+                    // ✅ STAFF - với các route con
                     {
                         path: "staff",
                         element: <ProtectedRoute role="staff" />,
                         children: [
                             { index: true, element: <LayoutStaff /> },
+                            { path: "products", element: <LayoutStaff /> },
+                            { path: "import", element: <LayoutStaff /> },
+                            { path: "export", element: <LayoutStaff /> },
+                            { path: "history", element: <LayoutStaff /> },
+                            { path: "inventory", element: <LayoutStaff /> },
+                            { path: "schedule", element: <LayoutStaff /> },
+                            { path: "attendance", element: <LayoutStaff /> },
+                            { path: "salary", element: <LayoutStaff /> },
+                            { path: "review", element: <LayoutStaff /> },
                         ],
                     },
                 ],

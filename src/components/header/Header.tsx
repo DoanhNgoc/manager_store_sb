@@ -1,13 +1,16 @@
-import { Bell, Menu, Search, User, X } from "lucide-react";
+import { ArrowLeft, Bell, Menu, PanelLeftClose, PanelLeft, Search, User } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 
 interface HeaderProps {
     isSidebarOpen: boolean;
     toggleSidebar: () => void;
+    canGoBack?: boolean;
+    onGoBack?: () => void;
+    currentPageTitle?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
+const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar, canGoBack, onGoBack, currentPageTitle }) => {
     const { lastName, roleKey } = useAuth()
 
     return (
@@ -16,9 +19,21 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
                 <button
                     onClick={toggleSidebar}
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    title={isSidebarOpen ? "Thu gọn menu" : "Mở rộng menu"}
                 >
-                    {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+                    {isSidebarOpen ? <PanelLeftClose size={20} /> : <PanelLeft size={20} />}
                 </button>
+
+                {/* Back Button */}
+                {canGoBack && onGoBack && (
+                    <button
+                        onClick={onGoBack}
+                        className="flex items-center gap-2 px-3 py-1.5 text-slate-600 hover:text-[#009099] hover:bg-[#009099]/10 rounded-lg transition-colors"
+                    >
+                        <ArrowLeft size={18} />
+                        <span className="text-sm font-medium hidden sm:inline">Quay lại</span>
+                    </button>
+                )}
 
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-[#009099] rounded-lg flex items-center justify-center text-white font-bold">
@@ -27,6 +42,11 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar }) => {
                     <span className="font-bold text-xl hidden sm:block tracking-tight text-gray-800 font-sans">
                         Store Manager
                     </span>
+                    {currentPageTitle && (
+                        <span className="text-slate-400 hidden lg:inline">
+                            / <span className="text-slate-600 font-medium">{currentPageTitle}</span>
+                        </span>
+                    )}
                 </div>
             </div>
 
