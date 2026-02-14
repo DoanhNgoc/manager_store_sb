@@ -22,5 +22,31 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment variables - SENSITIVE DATA
 .env
 .env.*
+!.env.example
+
+# Firebase - SENSITIVE DATA
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Service Account Keys - SENSITIVE DATA
+*-firebase-adminsdk-*.json
+serviceAccountKey.json
+
+# Build outputs
+build/
+.cache/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+*.swp
+*.swo
+*~

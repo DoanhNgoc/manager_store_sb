@@ -191,9 +191,9 @@ export default function StaffExport() {
                 </div>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 {/* Left: Export Info */}
-                <div className="lg:col-span-1 space-y-4">
+                <div className="lg:col-span-1 space-y-4 order-2 lg:order-1">
                     {/* Export Type */}
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
                         <h3 className="font-semibold text-slate-800 mb-4 flex items-center gap-2">
@@ -288,7 +288,7 @@ export default function StaffExport() {
                 </div>
 
                 {/* Middle: Product Selection */}
-                <div className="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div className="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden order-1 lg:order-2">
                     <div className="px-5 py-4 border-b border-slate-200">
                         <h3 className="font-semibold text-slate-800">Chọn sản phẩm</h3>
                         <p className="text-xs text-slate-500 mt-1">Chỉ hiển thị sản phẩm còn hàng</p>
@@ -356,7 +356,7 @@ export default function StaffExport() {
                 </div>
 
                 {/* Right: Selected Items */}
-                <div className="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div className="lg:col-span-1 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden order-3">
                     <div className="px-5 py-4 border-b border-slate-200">
                         <h3 className="font-semibold text-slate-800">
                             Sản phẩm xuất ({selectedItems.length})

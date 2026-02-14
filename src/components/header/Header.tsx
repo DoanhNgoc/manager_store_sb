@@ -1,5 +1,6 @@
 import { ArrowLeft, Bell, Menu, PanelLeftClose, PanelLeft, Search, User } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import NotificationBell from "../Notification/NotificationBell";
 
 
 interface HeaderProps {
@@ -60,10 +61,8 @@ const Header: React.FC<HeaderProps> = ({ isSidebarOpen, toggleSidebar, canGoBack
                     />
                 </div>
 
-                <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-full relative">
-                    <Bell size={20} />
-                    <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-                </button>
+                {/* Notification Bell - Hiển thị cho cả Staff và Manager */}
+                <NotificationBell />
 
                 <div className="flex items-center gap-3 pl-2 border-l border-gray-200">
                     <div className="hidden sm:block text-right">

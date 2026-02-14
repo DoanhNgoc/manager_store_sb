@@ -13,6 +13,8 @@ import StaffExport from "../../pages/Staff/warehouse/StaffExport";
 import StaffHistory from "../../pages/Staff/warehouse/StaffHistory";
 import StaffInventory from "../../pages/Staff/inventory/StaffInventory";
 import StaffReview from "../../pages/Staff/review/StaffReview";
+import StaffProfile from "../../pages/Staff/profile/StaffProfile";
+import StaffSettings from "../../pages/Staff/settings/StaffSettings";
 
 // Page titles mapping
 const PAGE_TITLES: Record<string, string> = {
@@ -24,7 +26,9 @@ const PAGE_TITLES: Record<string, string> = {
     schedule: "Lịch làm việc",
     attendance: "Chấm công",
     salary: "Bảng lương",
-    review: "Đánh giá tuần"
+    review: "Đánh giá tuần",
+    profile: "Thông tin cá nhân",
+    settings: "Cài đặt"
 };
 
 export default function LayoutStaff() {
@@ -102,6 +106,10 @@ export default function LayoutStaff() {
                 return <StaffSalary />;
             case "review":
                 return <StaffReview />;
+            case "profile":
+                return <StaffProfile />;
+            case "settings":
+                return <StaffSettings />;
             default:
                 return <StaffProducts />;
         }
@@ -142,9 +150,7 @@ export default function LayoutStaff() {
 
             {/* Main Content Area */}
             <main className={`pt-24 pb-12 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${isMobile ? 'ml-0' : (isSidebarOpen ? 'ml-64' : 'ml-20')}`}>
-                <div className="max-w-7xl mx-auto">
-                    {renderContent()}
-                </div>
+                {renderContent()}
             </main>
         </div>
     );

@@ -7,20 +7,33 @@ interface ListReviewsProps {
     setDeleteConfirm: React.Dispatch<React.SetStateAction<string | null>>,
     userMap: Record<string, any>,
 }
-function getUidFromRef(ref: any): string | null {
+
+// Hỗ trợ cả reference (cũ) và object (mới sau populate)
+function getUserId(ref: any): string | null {
+    if (!ref) return null;
+    // Nếu là object đã populate
+    if (ref.id) return ref.id;
+    // Nếu là reference (cũ)
     return ref?._path?.segments?.[1] ?? null;
 }
 
 const ItemReview = ({ itemReview, setDeleteConfirm, userMap }: ListReviewsProps) => {
-    const creatorUid = getUidFromRef(itemReview.user_create);
-    const reviewerUid = getUidFromRef(itemReview.user_review);
-    const creator = creatorUid ? userMap[creatorUid] : null;
-    const reviewer = reviewerUid ? userMap[reviewerUid] : null;
+    const creatorUid = getUserId(itemReview.user_create);
+    const reviewerUid = getUserId(itemReview.user_review);
+    
+    // Ưu tiên dùng data đã populate, fallback sang userMap
+    const creator = itemReview.user_create?.first_name 
+        ? itemReview.user_create 
+        : (creatorUid ? userMap[creatorUid] : null);
+    const reviewer = itemReview.user_review?.first_name 
+        ? itemReview.user_review 
+        : (reviewerUid ? userMap[reviewerUid] : null);
+    
     const creatorName = creator
-        ? `${creator.first_name} ${creator.last_name}`
+        ? `${creator.first_name || ''} ${creator.last_name || ''}`
         : "—";
     const reviewerName = reviewer
-        ? `${reviewer.first_name} ${reviewer.last_name}`
+        ? `${reviewer.first_name || ''} ${reviewer.last_name || ''}`
         : "—";
 
     const weekInfo = itemReview?.start_week

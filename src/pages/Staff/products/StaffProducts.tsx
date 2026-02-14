@@ -148,41 +148,41 @@ export default function StaffProducts() {
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
-                        <table className="w-full">
+                        <table className="w-full min-w-[700px]">
                             <thead className="bg-slate-50 border-b border-slate-200">
                                 <tr>
-                                    <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Sản phẩm</th>
-                                    <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Danh mục</th>
-                                    <th className="text-right px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Giá bán</th>
-                                    <th className="text-center px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Tồn kho</th>
-                                    <th className="text-center px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Trạng thái</th>
-                                    <th className="text-center px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Chi tiết</th>
+                                    <th className="text-left px-4 sm:px-6 py-3 sm:py-4 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">Sản phẩm</th>
+                                    <th className="text-left px-4 sm:px-6 py-3 sm:py-4 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">Danh mục</th>
+                                    <th className="text-right px-4 sm:px-6 py-3 sm:py-4 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">Giá bán</th>
+                                    <th className="text-center px-4 sm:px-6 py-3 sm:py-4 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">Tồn kho</th>
+                                    <th className="text-center px-4 sm:px-6 py-3 sm:py-4 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">Trạng thái</th>
+                                    <th className="text-center px-4 sm:px-6 py-3 sm:py-4 text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider">Chi tiết</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
                                 {filteredProducts.map((product) => (
                                     <tr key={product.id} className="hover:bg-slate-50 transition-colors">
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-lg bg-[#009099]/10 flex items-center justify-center">
-                                                    <Package size={20} className="text-[#009099]" />
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4">
+                                            <div className="flex items-center gap-2 sm:gap-3">
+                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#009099]/10 flex items-center justify-center flex-shrink-0">
+                                                    <Package size={16} className="text-[#009099] sm:w-5 sm:h-5" />
                                                 </div>
-                                                <span className="font-medium text-slate-800">{product.name}</span>
+                                                <span className="font-medium text-slate-800 text-sm sm:text-base">{product.name}</span>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-slate-600">{product.category}</td>
-                                        <td className="px-6 py-4 text-right font-semibold text-slate-800">{formatCurrency(product.price)}</td>
-                                        <td className="px-6 py-4 text-center">
-                                            <span className="font-medium text-slate-800">{product.stock}</span>
-                                            <span className="text-slate-400 ml-1">{product.unit || 'cái'}</span>
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-slate-600 text-sm">{product.category}</td>
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-right font-semibold text-slate-800 text-sm">{formatCurrency(product.price)}</td>
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-center">
+                                            <span className="font-medium text-slate-800 text-sm">{product.stock}</span>
+                                            <span className="text-slate-400 ml-1 text-xs sm:text-sm">{product.unit || 'cái'}</span>
                                         </td>
-                                        <td className="px-6 py-4 text-center">{getStatusBadge(product.status)}</td>
-                                        <td className="px-6 py-4 text-center">
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-center">{getStatusBadge(product.status)}</td>
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-center">
                                             <button
                                                 onClick={() => setSelectedProduct(product)}
-                                                className="p-2 hover:bg-[#009099]/10 rounded-lg transition-colors group"
+                                                className="p-1.5 sm:p-2 hover:bg-[#009099]/10 rounded-lg transition-colors group"
                                             >
-                                                <Eye size={18} className="text-slate-400 group-hover:text-[#009099]" />
+                                                <Eye size={16} className="text-slate-400 group-hover:text-[#009099] sm:w-[18px] sm:h-[18px]" />
                                             </button>
                                         </td>
                                     </tr>

@@ -14,7 +14,9 @@ import {
     rejectScheduleRequest,
     approveMultipleRequests,
     assignSchedule,
-    removeSchedule
+    removeSchedule,
+    sendScheduleNotification,
+    sendRegistrationReminder
 } from "../servers/schedule/schedule.service";
 
 const router = Router();
@@ -194,6 +196,34 @@ router.delete("/admin/schedules/:id", async (req, res) => {
     try {
         await removeSchedule(req.params.id);
         res.json({ success: true });
+    } catch (err: any) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Gửi thông báo lịch làm cho nhân viên
+router.post("/admin/schedules/send-notification", async (req, res) => {
+    try {
+        const { startDate, endDate } = req.body;
+        if (!startDate || !endDate) {
+            return res.status(400).json({ success: false, message: "Missing startDate or endDate" });
+        }
+        const result = await sendScheduleNotification(startDate, endDate);
+        res.json({ success: true, ...result });
+    } catch (err: any) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Gửi nhắc nhở đăng ký ca
+router.post("/admin/schedules/send-reminder", async (req, res) => {
+    try {
+        const { startDate, endDate } = req.body;
+        if (!startDate || !endDate) {
+            return res.status(400).json({ success: false, message: "Missing startDate or endDate" });
+        }
+        const result = await sendRegistrationReminder(startDate, endDate);
+        res.json({ success: true, ...result });
     } catch (err: any) {
         res.status(500).json({ success: false, message: err.message });
     }

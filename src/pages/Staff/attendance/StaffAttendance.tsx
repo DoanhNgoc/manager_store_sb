@@ -309,23 +309,23 @@ export default function StaffAttendance() {
             )}
 
             {/* Header */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-800">Chấm công</h1>
-                    <p className="text-slate-500 mt-1">Check-in / Check-out ca làm việc</p>
+                    <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Chấm công</h1>
+                    <p className="text-slate-500 mt-0.5 sm:mt-1 text-sm sm:text-base">Check-in / Check-out ca làm việc</p>
                 </div>
                 {/* Streak Badge */}
                 {streak > 0 && (
-                    <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl text-white">
-                        <Flame size={20} />
-                        <span className="font-bold">{streak} ngày</span>
-                        <span className="text-sm opacity-90">đúng giờ liên tiếp</span>
+                    <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg sm:rounded-xl text-white self-start sm:self-auto">
+                        <Flame size={16} className="sm:w-5 sm:h-5" />
+                        <span className="font-bold text-sm sm:text-base">{streak} ngày</span>
+                        <span className="text-xs sm:text-sm opacity-90">đúng giờ liên tiếp</span>
                     </div>
                 )}
             </div>
 
             {/* Main Check-in Card */}
-            <div className="bg-gradient-to-br from-[#1e293b] to-[#334155] rounded-2xl p-6 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-[#1e293b] to-[#334155] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-5">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
@@ -333,28 +333,28 @@ export default function StaffAttendance() {
                 </div>
 
                 <div className="relative z-10">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
                         {/* Time Display */}
                         <div className="text-center lg:text-left">
-                            <p className="text-slate-300 text-sm mb-2">
+                            <p className="text-slate-300 text-xs sm:text-sm mb-1 sm:mb-2">
                                 {currentTime.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                             </p>
-                            <p className="text-5xl font-bold tracking-wider font-mono">
+                            <p className="text-3xl sm:text-5xl font-bold tracking-wider font-mono">
                                 {currentTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                             </p>
                             
                             {/* Today's Schedule */}
                             {todaySchedule ? (
-                                <div className="mt-4 p-3 bg-white/10 rounded-xl">
-                                    <p className="text-sm text-slate-300">Ca làm hôm nay</p>
-                                    <p className="text-lg font-semibold text-[#00d4e0]">
+                                <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-white/10 rounded-lg sm:rounded-xl">
+                                    <p className="text-xs sm:text-sm text-slate-300">Ca làm hôm nay</p>
+                                    <p className="text-base sm:text-lg font-semibold text-[#00d4e0]">
                                         {todaySchedule.shift_type} • {todaySchedule.start_time} - {todaySchedule.end_time}
                                     </p>
                                 </div>
                             ) : (
-                                <div className="mt-4 p-3 bg-red-500/20 rounded-xl border border-red-500/30">
-                                    <p className="text-sm text-red-300 flex items-center gap-2">
-                                        <AlertTriangle size={16} />
+                                <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-red-500/20 rounded-lg sm:rounded-xl border border-red-500/30">
+                                    <p className="text-xs sm:text-sm text-red-300 flex items-center gap-2">
+                                        <AlertTriangle size={14} className="sm:w-4 sm:h-4" />
                                         Bạn không có lịch làm việc hôm nay
                                     </p>
                                 </div>
@@ -362,14 +362,14 @@ export default function StaffAttendance() {
 
                             {/* Status Info */}
                             {todayAttendance?.check_in && (
-                                <div className="mt-3 space-y-1">
-                                    <p className="text-[#009099] flex items-center justify-center lg:justify-start gap-2">
-                                        <CheckCircle size={16} />
+                                <div className="mt-2 sm:mt-3 space-y-1">
+                                    <p className="text-[#009099] flex items-center justify-center lg:justify-start gap-2 text-xs sm:text-sm">
+                                        <CheckCircle size={14} className="sm:w-4 sm:h-4" />
                                         Check-in lúc {todayAttendance.check_in}
                                         {todayAttendance.check_out && ` • Check-out lúc ${todayAttendance.check_out}`}
                                     </p>
                                     {isCheckedIn && (
-                                        <p className="text-white/80 text-sm">
+                                        <p className="text-white/80 text-xs sm:text-sm">
                                             Đang làm việc: <span className="font-bold text-[#00d4e0]">{formatWorkingTime(workingTime)}</span>
                                         </p>
                                     )}
@@ -378,35 +378,35 @@ export default function StaffAttendance() {
                         </div>
 
                         {/* Right Side: Countdown + Buttons */}
-                        <div className="flex flex-col items-center gap-4">
+                        <div className="flex flex-col items-center gap-3 sm:gap-4">
                             {/* Countdown */}
                             {countdown && (
-                                <div className="text-center p-4 bg-white/10 rounded-xl min-w-[150px]">
-                                    <p className="text-xs text-slate-300 uppercase tracking-wider">{countdown.label}</p>
-                                    <p className="text-2xl font-bold text-[#00d4e0]">{countdown.time}</p>
-                                    <p className="text-xs text-slate-400">
+                                <div className="text-center p-3 sm:p-4 bg-white/10 rounded-lg sm:rounded-xl min-w-[120px] sm:min-w-[150px]">
+                                    <p className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider">{countdown.label}</p>
+                                    <p className="text-xl sm:text-2xl font-bold text-[#00d4e0]">{countdown.time}</p>
+                                    <p className="text-[10px] sm:text-xs text-slate-400">
                                         {countdown.type === 'start' ? 'đến giờ làm' : 'hết ca'}
                                     </p>
                                 </div>
                             )}
 
                             {/* Check-in/out Buttons */}
-                            <div className="flex gap-4 justify-center">
+                            <div className="flex gap-3 sm:gap-4 justify-center">
                                 {!todaySchedule ? (
-                                    <div className="flex items-center gap-3 px-8 py-4 bg-slate-600 rounded-xl font-semibold cursor-not-allowed">
-                                        <XCircle size={24} />
+                                    <div className="flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-slate-600 rounded-lg sm:rounded-xl font-semibold cursor-not-allowed text-sm sm:text-base">
+                                        <XCircle size={20} className="sm:w-6 sm:h-6" />
                                         <span>Không có ca làm</span>
                                     </div>
                                 ) : !todayAttendance?.check_in ? (
                                     <button
                                         onClick={handleCheckIn}
                                         disabled={actionLoading}
-                                        className="flex items-center gap-3 px-8 py-4 bg-[#009099] hover:bg-[#007a82] rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#009099]/30 hover:shadow-[#009099]/50 hover:scale-105"
+                                        className="flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-[#009099] hover:bg-[#007a82] rounded-lg sm:rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#009099]/30 hover:shadow-[#009099]/50 hover:scale-105 text-sm sm:text-base"
                                     >
                                         {actionLoading ? (
-                                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                                            <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-b-2 border-white"></div>
                                         ) : (
-                                            <LogIn size={24} />
+                                            <LogIn size={20} className="sm:w-6 sm:h-6" />
                                         )}
                                         <span>Check-in</span>
                                     </button>
@@ -414,18 +414,18 @@ export default function StaffAttendance() {
                                     <button
                                         onClick={handleCheckOut}
                                         disabled={actionLoading}
-                                        className="flex items-center gap-3 px-8 py-4 bg-red-500 hover:bg-red-600 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:scale-105"
+                                        className="flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-red-500 hover:bg-red-600 rounded-lg sm:rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:scale-105 text-sm sm:text-base"
                                     >
                                         {actionLoading ? (
-                                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                                            <div className="animate-spin rounded-full h-5 w-5 sm:h-6 sm:w-6 border-b-2 border-white"></div>
                                         ) : (
-                                            <LogOut size={24} />
+                                            <LogOut size={20} className="sm:w-6 sm:h-6" />
                                         )}
                                         <span>Check-out</span>
                                     </button>
                                 ) : (
-                                    <div className="flex items-center gap-3 px-8 py-4 bg-green-600 rounded-xl font-semibold">
-                                        <CheckCircle size={24} />
+                                    <div className="flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-green-600 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base">
+                                        <CheckCircle size={20} className="sm:w-6 sm:h-6" />
                                         <span>Đã hoàn thành</span>
                                     </div>
                                 )}
@@ -436,22 +436,22 @@ export default function StaffAttendance() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
                 {/* Month Comparison Stats */}
                 {monthComparison && (
                     <>
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-[#009099]/10 flex items-center justify-center">
-                                    <Calendar size={20} className="text-[#009099]" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#009099]/10 flex items-center justify-center">
+                                    <Calendar size={16} className="text-[#009099] sm:w-5 sm:h-5" />
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Ngày làm tháng này</p>
-                                    <div className="flex items-center gap-2">
-                                        <p className="text-xl font-bold text-slate-800">{monthComparison.current.totalDays}</p>
+                                    <p className="text-[10px] sm:text-xs text-slate-500">Ngày làm tháng này</p>
+                                    <div className="flex items-center gap-1 sm:gap-2">
+                                        <p className="text-lg sm:text-xl font-bold text-slate-800">{monthComparison.current.totalDays}</p>
                                         {monthComparison.comparison.daysChange !== 0 && (
-                                            <span className={`text-xs flex items-center ${monthComparison.comparison.daysChange > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                                {monthComparison.comparison.daysChange > 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                            <span className={`text-[10px] sm:text-xs flex items-center ${monthComparison.comparison.daysChange > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                {monthComparison.comparison.daysChange > 0 ? <TrendingUp size={10} className="sm:w-3 sm:h-3" /> : <TrendingDown size={10} className="sm:w-3 sm:h-3" />}
                                                 {Math.abs(monthComparison.comparison.daysChange)}
                                             </span>
                                         )}
@@ -459,18 +459,18 @@ export default function StaffAttendance() {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
-                                    <CheckCircle size={20} className="text-green-500" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-green-50 flex items-center justify-center">
+                                    <CheckCircle size={16} className="text-green-500 sm:w-5 sm:h-5" />
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Đúng giờ</p>
-                                    <div className="flex items-center gap-2">
-                                        <p className="text-xl font-bold text-slate-800">{monthComparison.current.onTime}</p>
+                                    <p className="text-[10px] sm:text-xs text-slate-500">Đúng giờ</p>
+                                    <div className="flex items-center gap-1 sm:gap-2">
+                                        <p className="text-lg sm:text-xl font-bold text-slate-800">{monthComparison.current.onTime}</p>
                                         {monthComparison.comparison.onTimeChange !== 0 && (
-                                            <span className={`text-xs flex items-center ${monthComparison.comparison.onTimeChange > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                                {monthComparison.comparison.onTimeChange > 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                            <span className={`text-[10px] sm:text-xs flex items-center ${monthComparison.comparison.onTimeChange > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                {monthComparison.comparison.onTimeChange > 0 ? <TrendingUp size={10} className="sm:w-3 sm:h-3" /> : <TrendingDown size={10} className="sm:w-3 sm:h-3" />}
                                                 {Math.abs(monthComparison.comparison.onTimeChange)}
                                             </span>
                                         )}
@@ -478,29 +478,29 @@ export default function StaffAttendance() {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-yellow-50 flex items-center justify-center">
-                                    <Clock size={20} className="text-yellow-500" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-yellow-50 flex items-center justify-center">
+                                    <Clock size={16} className="text-yellow-500 sm:w-5 sm:h-5" />
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Đi muộn</p>
-                                    <p className="text-xl font-bold text-slate-800">{monthComparison.current.late}</p>
+                                    <p className="text-[10px] sm:text-xs text-slate-500">Đi muộn</p>
+                                    <p className="text-lg sm:text-xl font-bold text-slate-800">{monthComparison.current.late}</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                                    <Timer size={20} className="text-blue-500" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-50 flex items-center justify-center">
+                                    <Timer size={16} className="text-blue-500 sm:w-5 sm:h-5" />
                                 </div>
                                 <div>
-                                    <p className="text-xs text-slate-500">Tổng giờ</p>
-                                    <div className="flex items-center gap-2">
-                                        <p className="text-xl font-bold text-slate-800">{monthComparison.current.totalHours.toFixed(1)}h</p>
+                                    <p className="text-[10px] sm:text-xs text-slate-500">Tổng giờ</p>
+                                    <div className="flex items-center gap-1 sm:gap-2">
+                                        <p className="text-lg sm:text-xl font-bold text-slate-800">{monthComparison.current.totalHours.toFixed(1)}h</p>
                                         {monthComparison.comparison.hoursChange !== 0 && (
-                                            <span className={`text-xs flex items-center ${monthComparison.comparison.hoursChange > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                                {monthComparison.comparison.hoursChange > 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                            <span className={`text-[10px] sm:text-xs flex items-center ${monthComparison.comparison.hoursChange > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                                {monthComparison.comparison.hoursChange > 0 ? <TrendingUp size={10} className="sm:w-3 sm:h-3" /> : <TrendingDown size={10} className="sm:w-3 sm:h-3" />}
                                                 {Math.abs(monthComparison.comparison.hoursChange).toFixed(1)}h
                                             </span>
                                         )}
@@ -511,14 +511,14 @@ export default function StaffAttendance() {
                     </>
                 )}
                 {/* Streak */}
-                <div className="bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl shadow-sm p-5 text-white">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
-                            <Flame size={20} />
+                <div className="col-span-2 lg:col-span-1 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-5 text-white">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/20 flex items-center justify-center">
+                            <Flame size={16} className="sm:w-5 sm:h-5" />
                         </div>
                         <div>
-                            <p className="text-xs text-white/80">Streak đúng giờ</p>
-                            <p className="text-xl font-bold">{streak} ngày</p>
+                            <p className="text-[10px] sm:text-xs text-white/80">Streak đúng giờ</p>
+                            <p className="text-lg sm:text-xl font-bold">{streak} ngày</p>
                         </div>
                     </div>
                 </div>

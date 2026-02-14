@@ -39,7 +39,7 @@ export function useReviewWeek() {
     const fetchReviewWeeks = async () => {
         try {
             setLoading(true);
-            const res = await fetch("http://localhost:3001/api/review-week");
+            const res = await fetch("http://localhost:3001/api/review-weeks");
 
             const data: ApiResponse<ReviewWeek[]> = await res.json();
 
@@ -62,7 +62,7 @@ export function useReviewWeek() {
 
     /* ===== CREATE ===== */
     const createReviewWeek = async (payload: CreateReviewWeekPayload) => {
-        const res = await fetch("http://localhost:3001/api/review-week", {
+        const res = await fetch("http://localhost:3001/api/review-weeks", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -82,7 +82,7 @@ export function useReviewWeek() {
         if (!confirm("Xoá review tuần này?")) return;
 
         const res = await fetch(
-            `http://localhost:3001/api/review-week/${id}`,
+            `http://localhost:3001/api/review-weeks/${id}`,
             { method: "DELETE" }
         );
 

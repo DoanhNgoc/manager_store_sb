@@ -1,16 +1,22 @@
-import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc, query, where, Timestamp, getDoc } from "firebase/firestore";
+import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc, query, where, Timestamp, getDoc, DocumentReference } from "firebase/firestore";
 import { db } from "../../firebase/client/firebaseClient";
+
+// Helper: get user reference
+function getUserRef(userId: string): DocumentReference {
+    return doc(db, "users", userId);
+}
 
 // Tạo phiếu kiểm kê mới
 export async function createInventoryCheck(userId: string, title?: string) {
     const checkCode = `KK${Date.now().toString().slice(-8)}`;
+    const userRef = getUserRef(userId);
     const productsRef = collection(db, "products");
     const productsSnap = await getDocs(productsRef);
     
-    const items = productsSnap.docs.map(doc => {
-        const data = doc.data();
+    const items = productsSnap.docs.map(d => {
+        const data = d.data();
         return {
-            product_id: doc.id,
+            product_id: d.id,
             product_name: data.name || "Không có tên",
             system_quantity: data.quantity || 0,
             actual_quantity: null,
@@ -26,7 +32,7 @@ export async function createInventoryCheck(userId: string, title?: string) {
         code: checkCode,
         title: title || `Kiểm kê ${new Date().toLocaleDateString('vi-VN')}`,
         note: "",
-        created_by: userId,
+        created_by: userRef,
         created_at: Timestamp.now(),
         updated_at: Timestamp.now(),
         status: "draft",
@@ -48,29 +54,41 @@ export async function getInventoryCheckById(checkId: string) {
     if (!docSnap.exists()) return null;
     
     const data = docSnap.data();
-    // Get user info
+    // Get user info - handle both reference and string
     let createdByUser = null;
-    if (data.created_by) {
-        const userRef = doc(db, "users", data.created_by);
+    const createdBy = data.created_by;
+    if (createdBy) {
+        const userId = createdBy?.id || createdBy;
+        const userRef = doc(db, "users", userId);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
             createdByUser = { id: userSnap.id, ...userSnap.data() };
         }
     }
     
-    return { id: docSnap.id, ...data, created_by_user: createdByUser };
+    return { 
+        id: docSnap.id, 
+        ...data, 
+        created_by: data.created_by?.id || data.created_by,
+        created_by_user: createdByUser 
+    };
 }
 
 // Lấy danh sách phiếu kiểm kê của user
 export async function getInventoryChecksByUser(userId: string) {
+    const userRef = getUserRef(userId);
     const inventoryRef = collection(db, "inventory_checks");
-    const q = query(inventoryRef, where("created_by", "==", userId));
+    const q = query(inventoryRef, where("created_by", "==", userRef));
     const snap = await getDocs(q);
     
-    const checks = snap.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }));
+    const checks = snap.docs.map(d => {
+        const data = d.data();
+        return {
+            id: d.id,
+            ...data,
+            created_by: data.created_by?.id || data.created_by,
+        };
+    });
     
     return checks.sort((a: any, b: any) => {
         const aTime = a.created_at?._seconds || 0;
@@ -89,8 +107,9 @@ export async function deleteInventoryCheck(checkId: string, userId: string) {
     }
     
     const data = docSnap.data();
+    const createdById = data.created_by?.id || data.created_by;
     
-    if (data.created_by !== userId) {
+    if (createdById !== userId) {
         throw new Error("Bạn không có quyền xóa phiếu này");
     }
     
@@ -110,14 +129,21 @@ export async function getAllInventoryChecks() {
     const checks = await Promise.all(snap.docs.map(async (docSnap) => {
         const data = docSnap.data();
         let createdByUser = null;
-        if (data.created_by) {
-            const userRef = doc(db, "users", data.created_by);
+        const createdBy = data.created_by;
+        if (createdBy) {
+            const userId = createdBy?.id || createdBy;
+            const userRef = doc(db, "users", userId);
             const userSnap = await getDoc(userRef);
             if (userSnap.exists()) {
                 createdByUser = { id: userSnap.id, name: userSnap.data().name };
             }
         }
-        return { id: docSnap.id, ...data, created_by_user: createdByUser };
+        return { 
+            id: docSnap.id, 
+            ...data, 
+            created_by: data.created_by?.id || data.created_by,
+            created_by_user: createdByUser 
+        };
     }));
     
     return checks.sort((a: any, b: any) => {
@@ -245,6 +271,8 @@ export async function approveInventoryCheck(checkId: string, managerId: string) 
         throw new Error("Phiếu chưa được gửi hoặc đã duyệt");
     }
     
+    const managerRef = getUserRef(managerId);
+    
     // Điều chỉnh tồn kho
     const itemsToAdjust = checkData.items.filter((i: any) => i.checked && i.difference !== 0);
     
@@ -257,7 +285,7 @@ export async function approveInventoryCheck(checkId: string, managerId: string) 
     
     await updateDoc(docRef, {
         status: "approved",
-        approved_by: managerId,
+        approved_by: managerRef,
         approved_at: Timestamp.now(),
         updated_at: Timestamp.now()
     });
@@ -271,9 +299,11 @@ export async function rejectInventoryCheck(checkId: string, managerId: string, r
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) throw new Error("Phiếu kiểm kê không tồn tại");
     
+    const managerRef = getUserRef(managerId);
+    
     await updateDoc(docRef, {
         status: "rejected",
-        rejected_by: managerId,
+        rejected_by: managerRef,
         rejected_at: Timestamp.now(),
         reject_reason: reason,
         updated_at: Timestamp.now()
@@ -285,12 +315,17 @@ export async function rejectInventoryCheck(checkId: string, managerId: string, r
 // Lấy thống kê kiểm kê
 export async function getInventoryStats(userId?: string) {
     const inventoryRef = collection(db, "inventory_checks");
-    let q = userId 
-        ? query(inventoryRef, where("created_by", "==", userId))
-        : inventoryRef;
-    const snap = await getDocs(q);
+    let snap;
     
-    const checks = snap.docs.map(doc => doc.data());
+    if (userId) {
+        const userRef = getUserRef(userId);
+        const q = query(inventoryRef, where("created_by", "==", userRef));
+        snap = await getDocs(q);
+    } else {
+        snap = await getDocs(inventoryRef);
+    }
+    
+    const checks = snap.docs.map(d => d.data());
     const approvedChecks = checks.filter(c => c.status === "approved");
     
     // Tính tỷ lệ chính xác trung bình

@@ -24,20 +24,22 @@ export default function StaffReview() {
     }, [userId]);
 
     const fetchReviews = async () => {
-        if (!userId) return;
+        if (!userId) {
+            console.log("No userId available");
+            setLoading(false);
+            return;
+        }
+        console.log("Fetching reviews for userId:", userId);
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:3001/api/review-weeks");
+            // Gọi API lấy review theo userId
+            const res = await fetch(`http://localhost:3001/api/review-weeks/user/${userId}`);
             const json = await res.json();
+            console.log("API response:", json);
             if (json.success && Array.isArray(json.data)) {
-                // Filter reviews for current user
-                const userReviews = json.data.filter((r: any) => {
-                    const reviewUserId = r.user_review?.id || r.user_review?._path?.segments?.[1];
-                    return reviewUserId === userId;
-                });
-                setReviews(userReviews);
-                if (userReviews.length > 0) {
-                    setSelectedReview(userReviews[0]);
+                setReviews(json.data);
+                if (json.data.length > 0) {
+                    setSelectedReview(json.data[0]);
                 }
             }
         } catch (error) {
@@ -132,42 +134,42 @@ export default function StaffReview() {
             ) : (
                 <>
                     {/* Stats Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div className="bg-gradient-to-br from-[#009099] to-[#007a82] rounded-2xl p-5 text-white">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                        <div className="bg-gradient-to-br from-[#009099] to-[#007a82] rounded-xl sm:rounded-2xl p-4 sm:p-5 text-white">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-white/70 text-sm">Điểm trung bình</p>
+                                    <p className="text-white/70 text-xs sm:text-sm">Điểm trung bình</p>
                                     <div className="flex items-center gap-2 mt-1">
-                                        <p className="text-3xl font-bold">{avgRating}</p>
-                                        <Star size={24} className="text-yellow-300 fill-yellow-300" />
+                                        <p className="text-2xl sm:text-3xl font-bold">{avgRating}</p>
+                                        <Star size={20} className="text-yellow-300 fill-yellow-300 sm:w-6 sm:h-6" />
                                     </div>
                                 </div>
-                                <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
-                                    <Star size={28} className="text-yellow-300 fill-yellow-300" />
+                                <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl bg-white/20 flex items-center justify-center">
+                                    <Star size={20} className="text-yellow-300 fill-yellow-300 sm:w-7 sm:h-7" />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center">
-                                    <TrendingUp size={24} className="text-green-500" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                            <div className="flex items-center gap-3 sm:gap-4">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-green-50 flex items-center justify-center">
+                                    <TrendingUp size={20} className="text-green-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-slate-500">Đánh giá tốt</p>
-                                    <p className="text-2xl font-bold text-slate-800">{excellentCount}</p>
+                                    <p className="text-xs sm:text-sm text-slate-500">Đánh giá tốt</p>
+                                    <p className="text-xl sm:text-2xl font-bold text-slate-800">{excellentCount}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center">
-                                    <MessageSquare size={24} className="text-orange-500" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                            <div className="flex items-center gap-3 sm:gap-4">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-orange-50 flex items-center justify-center">
+                                    <MessageSquare size={20} className="text-orange-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-slate-500">Tổng đánh giá</p>
-                                    <p className="text-2xl font-bold text-slate-800">{reviews.length}</p>
+                                    <p className="text-xs sm:text-sm text-slate-500">Tổng đánh giá</p>
+                                    <p className="text-xl sm:text-2xl font-bold text-slate-800">{reviews.length}</p>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +280,7 @@ export default function StaffReview() {
                                                 )}
                                             </div>
                                             <p className="text-sm text-slate-500">
-                                                {formatDate(selectedReview?.start_week)} - {formatDate(selectedReview?.end_week)}
+                                                {formatDate(review.start_week)} - {formatDate(review.end_week)}
                                             </p>
                                             <p className="text-sm text-slate-600 mt-1 line-clamp-2">
                                                 {review.content || "Không có nhận xét"}

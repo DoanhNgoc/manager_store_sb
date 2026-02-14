@@ -38,14 +38,26 @@ if (
     throw new Error("❌ Missing Firebase Admin ENV");
 }
 
+const useEmulator = process.env.USE_EMULATOR === "true";
+
 if (!admin.apps.length) {
-    admin.initializeApp({
-        credential: admin.credential.cert({
-            projectId: process.env.FB_PROJECT_ID,
-            clientEmail: process.env.FB_CLIENT_EMAIL,
-            privateKey: process.env.FB_PRIVATE_KEY.replace(/\\n/g, "\n"),
-        }),
-    });
+    if (useEmulator) {
+        // Use emulator - no credentials needed
+        process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
+        process.env.FIREBASE_AUTH_EMULATOR_HOST = "localhost:9099";
+        admin.initializeApp({ projectId: process.env.FB_PROJECT_ID });
+        console.log("🔧 Admin SDK connected to Emulators");
+    } else {
+        // Use production
+        admin.initializeApp({
+            credential: admin.credential.cert({
+                projectId: process.env.FB_PROJECT_ID,
+                clientEmail: process.env.FB_CLIENT_EMAIL,
+                privateKey: process.env.FB_PRIVATE_KEY.replace(/\\n/g, "\n"),
+            }),
+        });
+        console.log("🚀 Admin SDK connected to Production");
+    }
 }
 
 export const adminAuth = admin.auth();

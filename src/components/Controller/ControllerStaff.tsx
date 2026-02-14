@@ -161,13 +161,27 @@ const ControllerStaff: React.FC<SidebarProps> = ({
 
                 {/* Bottom Section */}
                 <div className="pt-4 border-t border-slate-700 space-y-1">
-                    <button className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-slate-400 hover:bg-slate-700/30 hover:text-white transition-all group">
-                        <UserCircle size={20} className="text-slate-400 group-hover:text-[#009099]" />
+                    <button
+                        onClick={() => setActivePage("profile")}
+                        className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all group ${
+                            activePage === "profile"
+                                ? "bg-[#009099]/20 text-white"
+                                : "text-slate-400 hover:bg-slate-700/30 hover:text-white"
+                        }`}
+                    >
+                        <UserCircle size={20} className={activePage === "profile" ? "text-[#009099]" : "text-slate-400 group-hover:text-[#009099]"} />
                         {(isOpen || isMobile) && <span className="text-sm font-semibold">Cá nhân</span>}
                     </button>
 
-                    <button className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-slate-400 hover:bg-slate-700/30 hover:text-white transition-all group">
-                        <Settings size={20} className="text-slate-400 group-hover:text-[#009099]" />
+                    <button
+                        onClick={() => setActivePage("settings")}
+                        className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all group ${
+                            activePage === "settings"
+                                ? "bg-[#009099]/20 text-white"
+                                : "text-slate-400 hover:bg-slate-700/30 hover:text-white"
+                        }`}
+                    >
+                        <Settings size={20} className={activePage === "settings" ? "text-[#009099]" : "text-slate-400 group-hover:text-[#009099]"} />
                         {(isOpen || isMobile) && <span className="text-sm font-semibold">Cài đặt</span>}
                     </button>
 

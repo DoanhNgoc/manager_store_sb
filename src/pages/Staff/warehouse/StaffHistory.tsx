@@ -135,39 +135,39 @@ export default function StaffHistory() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                            <History size={20} className="text-purple-600" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                            <History size={16} className="text-purple-600 sm:w-5 sm:h-5" />
                         </div>
                         <div>
-                            <p className="text-sm text-slate-500">Tổng giao dịch</p>
-                            <p className="text-2xl font-bold text-slate-800">{transactions.length}</p>
+                            <p className="text-xs sm:text-sm text-slate-500">Tổng giao dịch</p>
+                            <p className="text-xl sm:text-2xl font-bold text-slate-800">{transactions.length}</p>
                         </div>
                     </div>
                 </div>
-                <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-                            <ArrowDownToLine size={20} className="text-green-600" />
+                <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-green-100 flex items-center justify-center">
+                            <ArrowDownToLine size={16} className="text-green-600 sm:w-5 sm:h-5" />
                         </div>
                         <div>
-                            <p className="text-sm text-slate-500">Phiếu nhập</p>
-                            <p className="text-2xl font-bold text-green-600">
+                            <p className="text-xs sm:text-sm text-slate-500">Phiếu nhập</p>
+                            <p className="text-xl sm:text-2xl font-bold text-green-600">
                                 {transactions.filter(t => t.type === "IMPORT").length}
                             </p>
                         </div>
                     </div>
                 </div>
-                <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
-                            <ArrowUpFromLine size={20} className="text-red-600" />
+                <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-red-100 flex items-center justify-center">
+                            <ArrowUpFromLine size={16} className="text-red-600 sm:w-5 sm:h-5" />
                         </div>
                         <div>
-                            <p className="text-sm text-slate-500">Phiếu xuất</p>
-                            <p className="text-2xl font-bold text-red-600">
+                            <p className="text-xs sm:text-sm text-slate-500">Phiếu xuất</p>
+                            <p className="text-xl sm:text-2xl font-bold text-red-600">
                                 {transactions.filter(t => t.type === "EXPORT").length}
                             </p>
                         </div>

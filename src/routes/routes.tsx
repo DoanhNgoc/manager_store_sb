@@ -50,6 +50,8 @@ const routes: RouteObject[] = [
                             { path: "attendance", element: <LayoutStaff /> },
                             { path: "salary", element: <LayoutStaff /> },
                             { path: "review", element: <LayoutStaff /> },
+                            { path: "profile", element: <LayoutStaff /> },
+                            { path: "settings", element: <LayoutStaff /> },
                         ],
                     },
                 ],

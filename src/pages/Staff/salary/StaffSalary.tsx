@@ -118,45 +118,45 @@ export default function StaffSalary() {
             ) : (
                 <>
                     {/* Stats Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div className="bg-gradient-to-br from-[#009099] to-[#007a82] rounded-2xl p-5 text-white">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                        <div className="bg-gradient-to-br from-[#009099] to-[#007a82] rounded-xl sm:rounded-2xl p-4 sm:p-5 text-white">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-white/70 text-sm">Lương tháng này</p>
-                                    <p className="text-2xl font-bold mt-1">{formatCurrency(currentMonthSalary)}</p>
+                                    <p className="text-white/70 text-xs sm:text-sm">Lương tháng này</p>
+                                    <p className="text-xl sm:text-2xl font-bold mt-1">{formatCurrency(currentMonthSalary)}</p>
                                     {salaryChange !== 0 && (
-                                        <p className={`text-sm mt-2 flex items-center gap-1 ${salaryChange > 0 ? 'text-green-300' : 'text-red-300'}`}>
-                                            <TrendingUp size={14} className={salaryChange < 0 ? 'rotate-180' : ''} />
+                                        <p className={`text-xs sm:text-sm mt-1 sm:mt-2 flex items-center gap-1 ${salaryChange > 0 ? 'text-green-300' : 'text-red-300'}`}>
+                                            <TrendingUp size={12} className={`sm:w-[14px] sm:h-[14px] ${salaryChange < 0 ? 'rotate-180' : ''}`} />
                                             {salaryChange > 0 ? '+' : ''}{salaryChange.toFixed(1)}% so với tháng trước
                                         </p>
                                     )}
                                 </div>
-                                <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
-                                    <Wallet size={28} />
+                                <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl bg-white/20 flex items-center justify-center">
+                                    <Wallet size={20} className="sm:w-7 sm:h-7" />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
-                                    <Clock size={24} className="text-blue-500" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                            <div className="flex items-center gap-3 sm:gap-4">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-blue-50 flex items-center justify-center">
+                                    <Clock size={20} className="text-blue-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-slate-500">Giờ tăng ca</p>
-                                    <p className="text-2xl font-bold text-slate-800">{selectedMonth?.overtime_hours || 0}h</p>
+                                    <p className="text-xs sm:text-sm text-slate-500">Giờ tăng ca</p>
+                                    <p className="text-xl sm:text-2xl font-bold text-slate-800">{selectedMonth?.overtime_hours || 0}h</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center">
-                                    <DollarSign size={24} className="text-green-500" />
+                        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                            <div className="flex items-center gap-3 sm:gap-4">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-green-50 flex items-center justify-center">
+                                    <DollarSign size={20} className="text-green-500 sm:w-6 sm:h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-slate-500">Tổng đã nhận</p>
-                                    <p className="text-2xl font-bold text-slate-800">{formatCurrency(totalEarned)}</p>
+                                    <p className="text-xs sm:text-sm text-slate-500">Tổng đã nhận</p>
+                                    <p className="text-xl sm:text-2xl font-bold text-slate-800">{formatCurrency(totalEarned)}</p>
                                 </div>
                             </div>
                         </div>

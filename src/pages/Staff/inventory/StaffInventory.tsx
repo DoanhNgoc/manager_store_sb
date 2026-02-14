@@ -60,6 +60,7 @@ type Step = 1 | 2 | 3;
 export default function StaffInventory() {
     const authContext = useAuth();
     const userId = authContext?.uidAuth;
+    const userName = authContext?.lastName || "Nhân viên";
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -297,6 +298,23 @@ export default function StaffInventory() {
                 setOriginalItems([...items]);
                 setCurrentStep(3);
                 fetchChecks();
+                
+                // Gửi thông báo cho Manager
+                const diffCount = items.filter(i => i.checked && i.difference !== 0).length;
+                try {
+                    await fetch("http://localhost:3001/api/notifications/inventory-submit", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            staffName: userName,
+                            checkCode: currentCheck.code,
+                            totalProducts: items.length,
+                            diffCount: diffCount,
+                        }),
+                    });
+                } catch (notifyErr) {
+                    console.error("Error sending notification:", notifyErr);
+                }
             } else {
                 showNotification("error", json.message);
             }
@@ -782,29 +800,29 @@ export default function StaffInventory() {
 
             {/* Stats Cards */}
             {stats && checks.length > 0 && (
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center"><FileText size={20} className="text-slate-500" /></div>
-                            <div><p className="text-xs text-slate-500">Phiếu nháp</p><p className="text-xl font-bold text-slate-800">{stats.draftChecks}</p></div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-100 flex items-center justify-center"><FileText size={16} className="text-slate-500 sm:w-5 sm:h-5" /></div>
+                            <div><p className="text-[10px] sm:text-xs text-slate-500">Phiếu nháp</p><p className="text-lg sm:text-xl font-bold text-slate-800">{stats.draftChecks}</p></div>
                         </div>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center"><Clock size={20} className="text-blue-500" /></div>
-                            <div><p className="text-xs text-slate-500">Chờ duyệt</p><p className="text-xl font-bold text-slate-800">{stats.submittedChecks}</p></div>
+                    <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-50 flex items-center justify-center"><Clock size={16} className="text-blue-500 sm:w-5 sm:h-5" /></div>
+                            <div><p className="text-[10px] sm:text-xs text-slate-500">Chờ duyệt</p><p className="text-lg sm:text-xl font-bold text-slate-800">{stats.submittedChecks}</p></div>
                         </div>
                     </div>
-                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center"><CheckCircle size={20} className="text-green-500" /></div>
-                            <div><p className="text-xs text-slate-500">Đã duyệt</p><p className="text-xl font-bold text-slate-800">{stats.approvedChecks}</p></div>
+                    <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-5">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-green-50 flex items-center justify-center"><CheckCircle size={16} className="text-green-500 sm:w-5 sm:h-5" /></div>
+                            <div><p className="text-[10px] sm:text-xs text-slate-500">Đã duyệt</p><p className="text-lg sm:text-xl font-bold text-slate-800">{stats.approvedChecks}</p></div>
                         </div>
                     </div>
-                    <div className="bg-gradient-to-br from-[#009099] to-[#00b8c4] rounded-2xl shadow-sm p-5 text-white">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center"><TrendingUp size={20} /></div>
-                            <div><p className="text-xs text-white/80">Độ chính xác</p><p className="text-xl font-bold">{stats.avgAccuracy}%</p></div>
+                    <div className="bg-gradient-to-br from-[#009099] to-[#00b8c4] rounded-xl sm:rounded-2xl shadow-sm p-3 sm:p-5 text-white">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/20 flex items-center justify-center"><TrendingUp size={16} className="sm:w-5 sm:h-5" /></div>
+                            <div><p className="text-[10px] sm:text-xs text-white/80">Độ chính xác</p><p className="text-lg sm:text-xl font-bold">{stats.avgAccuracy}%</p></div>
                         </div>
                     </div>
                 </div>

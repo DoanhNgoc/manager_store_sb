@@ -12,6 +12,7 @@ import attendanceRoutes from "./routes/attendance.route";
 import salaryRoutes from "./routes/salary.route";
 import seedRoutes from "./routes/seed.route";
 import inventoryRoutes from "./routes/inventory.route";
+import notificationRoutes from "./routes/notification.route";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/api', attendanceRoutes);
 app.use('/api', salaryRoutes);
 app.use('/api', seedRoutes);
 app.use('/api', inventoryRoutes);
+app.use('/api', notificationRoutes);
 
 /* test sống */
 app.get("/ping", (_req, res) => {
