@@ -9,6 +9,7 @@ import RestockForm from "./animation/RestockForm"
 import AuditForm from "./animation/AuditForm"
 import { useAuth } from "../../../context/AuthContext"
 import ReadTime from "../../../components/Fomat/Time_and_Duration/ReadTime"
+import NoItem from "../../../components/List/NoItem"
 
 function HomeWarehouse() {
     const [view, setView] = useState<string>("home")
@@ -85,30 +86,7 @@ function HomeWarehouse() {
                             {products.length === 0 ? (
                                 <tr>
                                     <td colSpan={4} className="py-24 px-10">
-                                        <div className="flex flex-col items-center justify-center text-center animate-in zoom-in-95 duration-500">
-                                            <div className="w-40 h-40 bg-slate-50 rounded-[3rem] flex items-center justify-center mb-8 relative">
-                                                <PackageOpen size={80} className="text-slate-200" />
-                                                <div className="absolute -top-2 -right-2 w-12 h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center animate-bounce">
-                                                    <Ghost size={24} className="text-[#7ED9D9]" />
-                                                </div>
-                                            </div>
-
-                                            <h3 className="text-2xl font-black text-slate-800 mb-3 tracking-tight">
-                                                Kho hàng đang trống rỗng
-                                            </h3>
-
-                                            <p className="text-slate-400 max-w-sm font-medium leading-relaxed mb-10">
-                                                Bạn chưa có sản phẩm nào trong danh sách. Hãy bắt đầu bằng cách thêm sản phẩm mới hoặc nhập hàng vào kho.
-                                            </p>
-
-                                            <div className="flex gap-4">
-                                                <button
-                                                    className="px-8 py-4 bg-[#7ED9D9] text-white font-black rounded-2xl shadow-xl shadow-[#7ed9d933] flex items-center gap-3 hover:scale-105 transition-all"
-                                                >
-                                                    <PlusCircle size={20} /> Khởi tạo vật liệu ngay
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <NoItem />
                                     </td>
                                 </tr>
                             ) :
@@ -151,7 +129,7 @@ function HomeWarehouse() {
             <RestockForm setView={setView} uidAuth={uidAuth} />
         )}
         {view === "audit" && (
-            <AuditForm products={products} setView={setView} />
+            <AuditForm uidAuth={uidAuth} setView={setView} />
         )}
     </>
 

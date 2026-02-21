@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import HomeManager from "../../pages/Manager/dashboard/HomeManager";
 import HumanResources from "../../pages/Manager/personal/HumanResources";
 import HomeSalary from "../../pages/Manager/personal/salary/HomeSalary";
-import IntoWarehouse from "../../pages/Manager/warehouses/IntoWarehouse";
+import WarehouseDataManagement from "../../pages/Manager/warehouses/WarehouseDataManagement";
 import Header from "../../components/header/Header";
 import PersonnelEvaluation from "../../pages/Manager/personal/review/PersonnelEvaluation";
 import StockAlert from "../../pages/Manager/warehouses/StockAlert";
@@ -75,8 +75,8 @@ export default function LayoutManager() {
             case "HistoryWarehouse":
                 return < HistoryWarehouse />
 
-            case "IntoWarehouse":
-                return <IntoWarehouse />
+            case "WarehouseDataManagement":
+                return <WarehouseDataManagement />
 
 
             case "StockAlert":

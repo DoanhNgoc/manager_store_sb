@@ -1,5 +1,5 @@
 
-import { AlertTriangle, Box, ClipboardCheck, History, Layers, LayoutDashboard, LogOut, Settings, UserCircle, Users, Wallet, Warehouse } from "lucide-react";
+import { ClipboardCheck, History, Layers, LayoutDashboard, LogOut, Settings, Settings2, UserCircle, Users, Wallet, Warehouse } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 interface SidebarProps {
     isOpen: boolean;
@@ -42,16 +42,9 @@ const managerController = [
         onclick: false,
         item: [
             {
-                icon: <Box size={18} />,
-                pages: "IntoWarehouse",
-                textHtml: "Nhập kho",
-                onclick: false,
-            },
-            {
-                // className="text-yellow-500"
-                icon: <Layers size={18} />,
-                pages: "StockAlert",
-                textHtml: "Cảnh báo tồn kho",
+                icon: <Settings2 size={18} />,
+                pages: "WarehouseDataManagement",
+                textHtml: "Quản lý dữ liệu ",
                 onclick: false,
             },
             {
