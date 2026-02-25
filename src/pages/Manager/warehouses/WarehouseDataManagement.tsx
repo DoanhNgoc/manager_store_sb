@@ -12,7 +12,7 @@ function WarehouseDataManagement() {
     const [selectedProducts, setSelectProducts] = useState<any | null>(null)
     const [showProductModal, setShowProductModal] = useState<boolean>(false)
     const { categories, error } = useCategories()
-    const { products, loadingProducts, fetchProducts, createProduct } = useProducts()
+    const { products, loadingProducts, fetchProducts, createProduct, updateProduct, deleteProduct } = useProducts()
     useEffect(() => {
         if (!products) return;
 
@@ -96,37 +96,15 @@ function WarehouseDataManagement() {
                         {error && <div className="m-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-bold border border-red-100"><ErrorState message={error} /></div>}
 
                         {/* list product */}
-                        <ProductBylistProducts nameCategory={selectedMgmtCat === null ? null : selectedMgmtCat?.name} listProducts={selectedProducts} />
-                        {/* products */}
-                        {/* <div className="px-6 pb-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                        {managementFilteredProducts.map(p => (
-                            <div key={p.id} className="p-5 border border-slate-100 rounded-[2rem] hover:shadow-xl hover:shadow-slate-200/50 transition-all group relative overflow-hidden">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className={`p-3 rounded-2xl ${p.currentStock <= p.alertLevel ? 'bg-red-50' : 'bg-slate-50'}`}>
-                                        <Package size={20} className={p.currentStock <= p.alertLevel ? 'text-red-500' : 'text-slate-400'} />
-                                    </div>
-                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button onClick={() => { setEditingProduct(p); setShowProductModal(true); }} className="p-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100"><Edit3 size={16} /></button>
-                                        <button onClick={() => requestDeleteProduct(p)} className="p-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100"><Trash2 size={16} /></button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p className="font-black text-slate-800 leading-tight mb-1">{p.name}</p>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{p.sku}</p>
-                                </div>
-                                <div className="mt-6 flex items-end justify-between border-t border-slate-50 pt-4">
-                                    <div>
-                                        <p className="text-[10px] font-black text-slate-300 uppercase mb-1">Tồn kho</p>
-                                        <p className={`text-2xl font-black ${p.currentStock <= p.alertLevel ? 'text-red-500' : 'text-slate-800'}`}>{p.currentStock}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-[10px] font-black text-slate-300 uppercase mb-1">Định mức</p>
-                                        <p className="font-bold text-slate-500 text-sm">Dưới {p.alertLevel}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div> */}
+                        <ProductBylistProducts
+                            nameCategory={selectedMgmtCat === null ? null : selectedMgmtCat?.name}
+                            listProducts={selectedProducts}
+                            categories={categories}
+                            fetchProducts={fetchProducts}
+                            updateProduct={updateProduct}
+                            deleteProduct={deleteProduct}
+                        />
+
                     </div>
                 </div>}
             {
